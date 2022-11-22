@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>COVID 19 API</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style/style.css">
+</head>
+<body>
+    <div style="background-size:contain">
+    <div class="container">
+        <h1 class="text-center mt-5" >COVID-19 trend in the UK</h1>
+
+    </div>
+
+    <div class="graphBox">
+        <div class="box" >
+            <canvas id="myChart1" width="400" height="300"></canvas>
+        </div>
+        <div class="box">
+            <canvas id="myChart2" width="400" height="300"></canvas>
+        </div>
+        <div ><input type="hidden" id="confirmed"></input>
+            <input type="hidden" id="death"></input></div>
+
+    </div>
+<!-- <div style="width:500px ;">
+        <div class="graphBox">
+            <div class="box">
+                <canvas id="myChart1" width="400" height="400"></canvas>
+            </div>
+            <div class="box">
+                <canvas id="myChart2" width="400" height="400"></canvas>
+            </div>
+
+        </div>
+
+      </div> -->
+      <div class="mypanel"></div>
+    </div>
+
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.0.1/chart.min.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- <script src="scripts/custom.js"></script> -->
+<!-- <script type="text/javascript" data-my_var_1="some_val_1" data-my_var_2="some_val_2" src="/js/somefile.js"></script> -->
+
+<script>
+
+
+   const ctx1 = document.getElementById('myChart1');
+   const ctx2 = document.getElementById('myChart2');
+
+  </script>
+<script>
+    $(document).ready(function(){
+        init()
+
+        function init(){
+
+            url= "https://api.coronavirus.data.gov.uk/v1/data"
+            dateArray=[]
+            confirmedArray=[]
+            $.getJSON(url,function(data){
+
+                var data1 = (data['data'])
+                data2 = JSON.stringify(data1)
+                data3 = JSON.parse(data2)
+
+
+
+                dateArray = data3.map(function(elem){
+                return elem.date;
+                })
+                confirmedArray = data3.map(function(elem){
+                return elem.confirmed;
+                })
+                deathArray = data3.map(function(elem){
+                return elem.deathNew;
+                })
+
+                console.log(dateArray.slice(-3))
+                console.log(confirmedArray.slice(-3))
+
+                $('#confirmed').value=confirmedArray
+                $('#death').value=dateArray
+
+
+
+                new Chart(ctx1, {
+                                        type: 'bar',
+                                        data: {
+                                        labels: dateArray,
+                                        datasets: [{
+                                        label: 'Total confirmed cases',
+                                        data: confirmedArray,
+                                        borderWidth: 1
+                                        }]
+                                        },
+                                    options: {
+                                    scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                    }
+                                }
+                                });
+
+                new Chart(ctx2, {
+                                        type: 'bar',
+                                        data: {
+                                        labels: dateArray,
+                                        datasets: [{
+                                        label: 'Total death rates',
+                                        data: deathArray,
+                                        borderWidth: 1,
+
+
+                                        }]
+                                        },
+                                    options: {
+                                    scales: {
+                                    y: {
+                                        beginAtZero: true
+                                    }
+                                    }
+                                }
+                                });
+
+
+            })
+
+
+
+        }
+    })
+</script>
+</html>

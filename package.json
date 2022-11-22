@@ -1,0 +1,58 @@
+{
+  "name": "webpage",
+  "version": "1.0.0",
+  "description": "A JavaScript project",
+  "main": "./dist/index.js",
+  "args": [
+    "-u",
+    "bdd",
+    "--timeout",
+    "999999",
+    "--colors",
+    "${workspaceFolder}/test/**/*.js"
+  ],
+  "scripts": {
+    "dev:watch": "node ./node_modules/parcel-bundler/bin/cli watch ./src/index.js --target node",
+    "dev:hot-reload": "node ./node_modules/nodemon/bin/nodemon --watch ./dist/ ./dist/index.js",
+    "start": "node ./node_modules/npm-run-all/bin/npm-run-all -p -r dev:watch dev:hot-reload",
+    "build": "node ./node_modules/parcel-bundler/bin/cli build ./src/index.js --target node --out-dir ./dist/",
+    "lint": "node ./node_modules/eslint/bin/eslint . --ext .js --fix",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "chai": "^4.3.7",
+    "eslint": "^8.27.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "mocha": "^10.1.0",
+    "nodemon": "^2.0.20",
+    "npm-run-all": "^4.1.5",
+    "parcel-bundler": "^1.12.5",
+    "supertest": "^6.3.1"
+
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.19.3",
+    "@babel/core": "^7.20.2",
+    "@babel/node": "^7.20.2",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/register": "^7.18.9",
+    "chai": "^4.3.7",
+    "eslint": "^8.27.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "mocha": "^10.1.0",
+    "nodemon": "^2.0.20",
+    "npm-run-all": "^4.1.5",
+    "parcel-bundler": "^1.12.5",
+    "supertest": "^6.3.1"
+  }
+}
